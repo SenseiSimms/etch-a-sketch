@@ -1,46 +1,59 @@
-const container = document.querySelector(".container");
-
-const newGridBtn = document.querySelector("#newGridBtn");
-
-const newDiv = document.createElement("div");
-newDiv.className = "newDiv";
-
-const blackColorBtn = document.querySelector(".newDiv");
-newDiv.style.backgroundColor = "black";
-
-   
-
-//When button is clicked, a pop-up appears asking for the size of grid to be made.
+    const container = document.querySelector(".container");
+    const newGridBtn = document.querySelector("#newGridBtn");
+    const blackColorBtn = document.querySelector("#blackColorBtn");
+    const randomColorBtn = document.querySelector("#randomColorBtn");
+    let newDivs = document.querySelectorAll(".newDiv");
+    let randomColor = false;
 
     function newGrid() {
-        let squares = prompt("How many squares on each side?");
-        const gridArea = squares * squares;
-    
-        if (sizeRange(squares)) {
-        for (let i = 0; i < gridArea; i++) {
-            container.style.gridTemplateColumns = `repeat(${squares}, 1fr)`;
-            container.style.gridTemplateRows = `repeat(${squares}, 1fr)`;
-            
-            newDiv.style.outline = "solid grey 1px";
-    
-            container.appendChild(newDiv);
-        }
-        }
-    }
+    const squares = prompt("How many squares on each side?");
+    const gridArea = squares ** 2;
 
-//A function that sets a range of how big or small the grid can be as to not crash the site.
+    if (sizeRange(squares)) {
+        container.style.gridTemplateColumns = `repeat(${squares}, 1fr)`;
+        container.style.gridTemplateRows = `repeat(${squares}, 1fr)`;
+
+        for (let i = 0; i < gridArea; i++) {
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("newDiv");
+        newDiv.style.outline = "solid grey 1px";
+        container.appendChild(newDiv);
+        }
+
+        newDivs = document.querySelectorAll(".newDiv");
+        addColorListener();
+    }
+    }
 
     function sizeRange(input) {
-        if (input >= 2 && input <= 100) {
+    if (input >= 2 && input <= 100) {
         return true;
-        } else {
+    } else {
         alert(`${input} is an invalid size, squares can only be between 2 and 100.`);
         return false;
-        }
     }
-    
+    }
+
+    function addColorListener() {
+    newDivs.forEach((newDiv) => {
+        newDiv.addEventListener("mouseover", function () {
+        this.style.backgroundColor = randomColor
+            ? `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
+                Math.random() * 256
+            )}, ${Math.floor(Math.random() * 256)})`
+            : "black";
+        });
+    });
+    }
+
+    randomColorBtn.addEventListener("click", function () {
+    randomColor = true;
+    });
+
+    blackColorBtn.addEventListener("click", function () {
+    randomColor = false;
+    });
+
+    newGridBtn.addEventListener("click", newGrid);
 
 
-
-newGridBtn.addEventListener("click", newGrid);
-newDiv.addEventListener("mouseover", blackColorBtn);
