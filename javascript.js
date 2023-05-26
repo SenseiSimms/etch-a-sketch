@@ -2,6 +2,7 @@
     const newGridBtn = document.querySelector("#newGridBtn");
     const blackColorBtn = document.querySelector("#blackColorBtn");
     const randomColorBtn = document.querySelector("#randomColorBtn");
+    const eraseBtn = document.querySelector(".eraseColorBtn")
     let newDivs = document.querySelectorAll(".newDiv");
     let randomColor = false;
 
@@ -53,6 +54,10 @@
     blackColorBtn.addEventListener("click", function () {
     randomColor = false;
     });
+
+    eraseBtn.addEventListener("click", function () {
+        randomColor = false;
+        });
 
     newGridBtn.addEventListener("click", newGrid);
 
